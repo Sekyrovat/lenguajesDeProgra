@@ -1,0 +1,88 @@
+#lang racket
+
+(define  (impares enteroEntrada)
+  (cond ((< enteroEntrada 10) (if (odd? enteroEntrada) 1 0))
+        ((even? (remainder enteroEntrada 10)) (impares (quotient enteroEntrada 10)))
+        (else ( + 1 (impares (quotient enteroEntrada 10)))))
+)
+
+
+(define (fibo3 n)
+  (if (< n 4)
+      1
+      (+ (fibo3 (- n 1)) (fibo3 (- n 2)) (fibo3 (- n 3))))
+)
+
+
+
+
+(define (fibo3t n)
+  (fibo3t-aux n 1 1 1)
+)
+
+(define (fibo3t-aux n a1 a2 a3)
+  (if (< n 4)
+      a1
+      (fibo3t-aux (- n 1) (+ a1 a2 a3) a1 a2)
+      )
+)
+
+
+; Funcion que regresa la ultima celda de una lista
+(define lastBox
+  (lambda (list)
+  (if (null? (cdr list))
+      (car list)
+      (lastBox (cdr list)))))
+
+; Funcion que regresa la penultima casilla
+(define prevToLastBox
+  (lambda (list)
+  (if (null? (cddr list))
+      (car list)
+      (prevToLastBox (cdr list)))))
+
+; Funcion que regresa el elemento nesimo de una lista
+(define nElement
+  (lambda (list n)
+      (if(eqv? n 1)
+           (car list)
+           (nElement (cdr list) (- n 1))
+       )
+   )
+)
+
+
+; Funcion que encuentra el numero de elementos en una lista
+(define numberOfElements
+  (lambda (list)
+    (if (null? (cdr list))
+        1
+        (+ 1 (numberOfElements (cdr list)))
+    )
+  )
+)
+
+
+; Funcion que invierte la lista de entrada 
+(define manualReverse
+  (lambda (listIn (listOut '()))
+    (if (null? listIn)
+        listOut
+        (manualReverse (cdr listIn) (cons (car listIn) listOut))
+    )
+  )
+)
+
+
+; Funcion para ver si la lista es o no un palindromo
+(define palindrome
+  (lambda (list)
+    (equal? list (manualReverse list))
+  )
+)
+
+
+; Funcion que aplana la lista
+(define flattenList
+  (lambda (list)
