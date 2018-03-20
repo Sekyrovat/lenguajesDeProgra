@@ -271,3 +271,103 @@ zip3 = map (\((p,s),t) -> (p,s,t)) (zip (zip l1 l2)l3)
         3 + 4
         (+) 3 4
 -}
+
+{-
+    Haskell tiene parametros por nombre.
+
+    Guardias
+        Son estructuras condicionales.
+        Ayudan a estructurar el codigo.
+        Se usan cuando los patrones no son suficientemente discriminativos
+-}
+
+factGuardias :: Int -> Int
+factGuardias n --Empata con un Int
+    | n == 0 = 1 -- Si el entero de entrada es 0 regreso 1
+    | n > 0 = n * factGuardias(n - 1) -- Si no regreso el factorial
+
+
+getEvenGuardias :: [Int] -> [Int]
+getEvenGuardias [] = []
+getEvenGuardias (x:xs)
+                        | even x = x :getEvenGuardias xs
+                        | otherwise = getEvenGuardias xs
+                            -- Otherwise es como decir true
+
+{-
+    Declaracion de conjuntos
+    Se puede dar en intencion o extension
+        Intencion describes funcionalmente sin decir los elementos
+            {x|x elemento de numeros naturales, x>0, x<10,x es impar}
+        Extension digo los elementos
+            {1,3,5,7,9}
+
+    Para hacer esto usaremos comprension de lista en haskell para describir
+    listas por medio de intencion. Donde establecemos que tipo de 
+    valores se contendra
+
+    [f x | x <- xs]
+
+    La funcion f es la que usamos para los numeros
+    xs es el generador de valores
+-}
+
+-- Producto cartesiano usando compension de listas
+prodCartCompresionLIstas :: [a] -> [b] -> [(a,b)]
+prodCartCompresionLIstas xs ys = 
+                                [(x,y) | x<-xs, y<-ys]
+{-
+    Lo puedes leer como: 
+        los pares tales que x pertenece al conjunto xs y 
+        'y' pertence al conjunto ys.
+    
+    El simbolo '<-' puedes interpretar esa flecha como pertenece 
+    que es el simbolo '∈' 
+-}
+
+
+prodCartCompresionLIstas2 :: [Int] -> [y] -> [Int] -> [(x,y)]
+prodCartCompresionLIstas2 xs ys zs =
+                                -- Puedo ahcer calculos aqui mismo 
+                                [(x*z,y) | x <- xs, y <- ys, z <- zs]
+
+positivosCompresion :: [Int] -> [Int]
+-- Aqui mostramos que se pueden usar condicionlaes dentro de la compresion
+positivosCompresion l = [x | z<-l, x>0]
+
+
+{-
+    El where es una definicion local, por lo que no lo podemos usar fuera
+    de la funcion, ya que la funcion es la que los necesita, y a pesar
+    de que son tecnicamente funciones en este caso no necesitan params. 
+-}
+qsort :: [Int] -> [Int]
+qsort [] = []
+qsort (x:xs) =
+    qsort lt ++ [x] ++ qsort ge
+    where
+        lt = [y | y <- xs, y < x]
+        ge = [y | y <- xs, y >= x]
+
+
+{-
+    Estructuras infinitas
+    [1..] esta lista genera un conjunto con los valores de 1 a infinito.
+    Son los numeros naturales.
+
+    Podemos usar take para tomar un cierto numero de elementos
+    take 6
+    
+    Tambien existe el takeWhile que tomara elementos mientras se cumpla
+    una condicional.
+
+    takeWhile (< 30) lista
+    Tomara valores de la lista que le pases que cumplan con la condicion.
+
+
+    Los valores se calculan cuando se necesita. Por ello hay que tener
+    cuidado cuando se usen.
+
+    Si no pones el caso base los programas se van a ciclar.
+-}
+
