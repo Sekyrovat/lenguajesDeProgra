@@ -283,13 +283,13 @@ zip3 = map (\((p,s),t) -> (p,s,t)) (zip (zip l1 l2)l3)
 
 factGuardias :: Int -> Int
 factGuardias n --Empata con un Int
-    | n == 0 = 1 -- Si el entero de entrada es 0 regreso 1
-    | n > 0 = n * factGuardias(n - 1) -- Si no regreso el factorial
+                | n == 0 = 1 -- Si el entero de entrada es 0 regreso 1
+                | n > 0 = n * factGuardias(n - 1) -- Si no regreso el factorial
 
 
 getEvenGuardias :: [Int] -> [Int]
 getEvenGuardias [] = []
-getEvenGuardias (x:xs)
+getEvenGuardias (x:xs) 
                         | even x = x :getEvenGuardias xs
                         | otherwise = getEvenGuardias xs
                             -- Otherwise es como decir true
@@ -326,14 +326,14 @@ prodCartCompresionLIstas xs ys =
 -}
 
 
-prodCartCompresionLIstas2 :: [Int] -> [y] -> [Int] -> [(x,y)]
+prodCartCompresionLIstas2 :: (Num x) => [x] -> [y] -> [x] -> [(x,y)]
 prodCartCompresionLIstas2 xs ys zs =
                                 -- Puedo ahcer calculos aqui mismo 
                                 [(x*z,y) | x <- xs, y <- ys, z <- zs]
 
 positivosCompresion :: [Int] -> [Int]
 -- Aqui mostramos que se pueden usar condicionlaes dentro de la compresion
-positivosCompresion l = [x | z<-l, x>0]
+positivosCompresion l = [x | x <- l, x > 0]
 
 
 {-
@@ -344,10 +344,10 @@ positivosCompresion l = [x | z<-l, x>0]
 qsort :: [Int] -> [Int]
 qsort [] = []
 qsort (x:xs) =
-    qsort lt ++ [x] ++ qsort ge
-    where
-        lt = [y | y <- xs, y < x]
-        ge = [y | y <- xs, y >= x]
+            qsort lt ++ [x] ++ qsort ge
+            where
+                lt = [y | y <- xs, y < x]
+                ge = [y | y <- xs, y >= x]
 
 
 {-
@@ -370,4 +370,3 @@ qsort (x:xs) =
 
     Si no pones el caso base los programas se van a ciclar.
 -}
-
