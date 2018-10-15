@@ -1,0 +1,33 @@
+#lang scheme
+(define (aux-op-multiplica numero lista)
+  (* numero (car lista))
+)
+(define (multiplica numero lista)
+  (if (null? lista)
+    lista
+    (cons (aux-op-multiplica numero lista) (multiplica numero (cdr lista)))
+  )
+)
+
+(define (aux-entero lista accum)
+  (if (null? lista)
+    accum
+    (aux-entero (cdr lista) (+ (* accum 10) (abs (car lista))))
+  )
+)
+(define (entero lista)
+  (if (negative-integer? (car lista))
+    (* -1 (aux-entero lista 0))
+    (aux-entero lista 0)
+  )
+)
+
+(define (aux-intercala lista1 lista2 lista-salida)
+  (if (or (null? lista1) (null? lista2))
+    (reverse lista-salida)
+    (aux-intercala (cdr lista1) (cdr lista2) (cons (car lista2) (cons (car lista1) lista-salida)))
+  )
+)
+(define (intercala lista1 lista2)
+  (aux-intercala lista1 lista2 '())
+)
